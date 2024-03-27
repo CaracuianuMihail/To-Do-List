@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>To Do List</title>
+</head>
+<body>
+
+    <div class="addToDoContainer">
+        <h2 class="listTitle">ADD To Do:</h2>
+        <input id="toDoTitle" placeholder="To do ..." class="toDoTitleInput">
+        <button class="addToDoBtn" id="addToDoBtn">Add to do</button>
+    </div>
+
+    <div class="listContainer">
+        <div class="toDoListWrapper">
+            <h2 class="listTitle">To Do List:</h2>
+            <ul class="toDoList" id="toDoList"></ul>
+        </div>
+    
+        <div class="toDoListWrapper">
+            <h2 class="listTitle">Completed To Do:</h2>
+            <ul class="toDoList" id="completeToDo"></ul>
+        </div>
+    </div>
+
+    <div class="editToDoWrapper">
+        <div class="editModal">
+            <h2 class="listTitle">Edit To Do:</h2>
+            <input id="editToDoTitle" placeholder="change to do title" class="toDoTitleInput">
+            <button class="editToDoBtn" id="editToDoBtn">Save changes</button>
+        </div>
+    </div>
+
+    <div class="saveToDoContainer">
+        <h2 class="listTitle">Save To Do:</h2>
+        <button class="saveBtn"id="saveToFileBtn"><img src="./8666778_download_down_save_icon.png" alt="Save Icon"></button>
+    </div>
+    
+
+
+    <script src="./index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+</body>
+</html>
