@@ -24,7 +24,10 @@ function toggleModal(){
     return modal.classList.add('openModal');
 }
 
-editBtn.addEventListener('click', toggleModal);
+editBtn.addEventListener('click', (e) => {
+    e.stopPropagation()
+    toggleModal()
+});
 
 function changeItemStatus (item){
     const newList = list.map(element => {
