@@ -17,17 +17,15 @@ window.onload = function() {
     }
 };
 
-function toggleModal(){
+function toggleModal(title){
     if(modal.classList.contains('openModal')){
        return modal.classList.remove('openModal');
     }
+    editToDoInput.value = title;
     return modal.classList.add('openModal');
 }
 
-editBtn.addEventListener('click', (e) => {
-    e.stopPropagation()
-    toggleModal()
-});
+editBtn.addEventListener('click', toggleModal);
 
 function changeItemStatus (item){
     const newList = list.map(element => {
@@ -62,9 +60,9 @@ const renderList = () => {
         saveIcon.src = './8666778_download_down_save_icon.png';
         editIcon.classList.add('icon');
         saveIcon.classList.add('icon');
-        editIcon.addEventListener('click', () => {
-            editToDoInput.value = item.title; 
-            toggleModal();
+        editIcon.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            toggleModal(item.title); 
         });
 
         deleteIcon.src = './8664938_trash_can_delete_remove_icon.png';
@@ -110,7 +108,7 @@ editBtn.addEventListener('click', () => {
     const editedTitle = editToDoInput.value.trim(); 
     if (editedTitle === '') return alert('To-do title should not be empty');
     
-    const selectedItemIndex = list.findIndex(item => item.title === item.title);
+    const selectedItemIndex = list.findIndex(item => item.title === editedTitle);
     if (selectedItemIndex !== -1) {
         list[selectedItemIndex].title = editedTitle; 
         toggleModal();
