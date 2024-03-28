@@ -41,10 +41,15 @@ body{
 
 .toDoItem{
     display: flex;
-    gap: 0.5rem;
     border-bottom: 1px solid gray;    
     cursor: pointer;
     align-items: center;
+    justify-content: space-between;
+}
+
+.toDoItemElementWrapper{
+    display: flex;
+    gap: 1rem;
 }
 
 .toDoListWrapper{
@@ -89,6 +94,12 @@ body{
 .icon{
     width: 16px;
     height: 16px;
+}
+
+.closeIcon {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
 
 .editToDoBtn{

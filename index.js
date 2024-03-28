@@ -8,6 +8,7 @@ const editToDoInput = document.getElementById('editToDoTitle');
 const saveToFileBtn = document.getElementById('saveToFileBtn');
 
 let list = [];
+let selectedTitle = '';
 
 window.onload = function() {
     const storedList = localStorage.getItem('toDoList');
@@ -22,10 +23,9 @@ function toggleModal(title){
        return modal.classList.remove('openModal');
     }
     editToDoInput.value = title;
+    selectedTitle = title;
     return modal.classList.add('openModal');
 }
-
-editBtn.addEventListener('click', toggleModal);
 
 function changeItemStatus (item){
     const newList = list.map(element => {
@@ -35,6 +35,19 @@ function changeItemStatus (item){
         return element;
     })
     list = [...newList];
+    renderList();
+    saveListToLocalStorage();
+}
+function editToDo() {
+    const editedTitle = editToDoInput.value.trim();
+    const newList = list.map((item) => {
+        if (item.title === selectedTitle) { 
+            return { ...item, title: editedTitle }; 
+        }
+        return item;
+    });
+    list = newList;
+    toggleModal(); 
     renderList();
     saveListToLocalStorage();
 }
@@ -55,29 +68,50 @@ const renderList = () => {
         const editIcon = document.createElement('img');
         const deleteIcon = document.createElement('img');
         const saveIcon = document.createElement('img');
+        const details = document.createElement('div');
+        const actions = document.createElement('div');
+
+        details.classList.add('toDoItemElementWrapper');
+        actions.classList.add('toDoItemElementWrapper');
 
         editIcon.src = './8666681_edit_icon.png';
+        deleteIcon.src = './8664938_trash_can_delete_remove_icon.png';
         saveIcon.src = './8666778_download_down_save_icon.png';
+
         editIcon.classList.add('icon');
+        deleteIcon.classList.add('icon'); 
         saveIcon.classList.add('icon');
+
         editIcon.addEventListener('click', (e) => {
             e.stopPropagation(); 
             toggleModal(item.title); 
         });
 
-        deleteIcon.src = './8664938_trash_can_delete_remove_icon.png';
-        deleteIcon.classList.add('icon'); 
+        
         deleteIcon.addEventListener('click', () => {
             removeItem(item);
         });
 
+        saveIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            saveListToTextFile(item); 
+        });
+
+
         toDoTitle.textContent = item.title;
         checkBox.type = 'checkbox';
         checkBox.checked = item.done;
-        li.appendChild(checkBox);
-        li.appendChild(toDoTitle);
-        li.appendChild(editIcon);
-        li.appendChild(deleteIcon); 
+
+        details.appendChild(checkBox);
+        details.appendChild(toDoTitle);
+
+        actions.appendChild(editIcon);
+        actions.appendChild(deleteIcon);
+        actions.appendChild(saveIcon);
+
+        li.appendChild(details);
+        li.appendChild(actions);
+      
         li.classList.add('toDoItem');
 
         li.addEventListener('click', () => changeItemStatus(item));
@@ -92,7 +126,7 @@ const renderList = () => {
 }
 
 const addToDo = () => {
-    if(list.some(todo => todo.title === addToDoInput.value)) return alert('To-do title should be unique');
+    if(list.some((item) => item.title === addToDoInput.value)) return alert('To-do title should be unique');
     if(addToDoInput.value === '') return alert('To-do title should not be empty');
 
     list.push({title: addToDoInput.value, done: false});
@@ -122,12 +156,12 @@ editBtn.addEventListener('click', () => {
 function saveListToLocalStorage() {
     localStorage.setItem('toDoList', JSON.stringify(list));
 }
-function saveListToTextFile() {
-    const formattedList = list.map(item => item.title + (item.done ? " (Completed)" : "")).join("\n");
-    const blob = new Blob([formattedList], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "todo_list.txt");
+
+function saveListToTextFile(item) {
+    const formattedItem = item.title + (item.done ? " (Completed)" : "");
+
+    const blob = new Blob([formattedItem], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "todo_item_" + item.title + ".txt");
 }
 
-    addToDoBtn.addEventListener('click', addToDo);
-    editBtn.addEventListener('click', toggleModal);
-    saveToFileBtn.addEventListener('click', saveListToTextFile);
+editBtn.addEventListener('click', editToDo);
