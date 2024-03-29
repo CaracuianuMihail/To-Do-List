@@ -6,6 +6,13 @@ const modal = document.querySelector('.editToDoWrapper');
 const editBtn = document.getElementById('editToDoBtn');
 const editToDoInput = document.getElementById('editToDoTitle');
 const saveToFileBtn = document.getElementById('saveToFileBtn');
+const closeModalButton = document.querySelector('.close-button');
+
+closeModalButton.addEventListener('click', handleCloseModal);   
+
+function handleCloseModal() {
+    modal.classList.remove('openModal');
+}
 
 let list = [];
 let selectedTitle = '';
