@@ -7,6 +7,8 @@ const editBtn = document.getElementById('editToDoBtn');
 const editToDoInput = document.getElementById('editToDoTitle');
 const saveToFileBtn = document.getElementById('saveToFileBtn');
 const closeModalButton = document.querySelector('.close-button');
+const sortTodo = document.getElementById('sortToDoIcon');
+const sortDoneTodo = document.getElementById('sortDoneToDoIcon');
 
 closeModalButton.addEventListener('click', handleCloseModal);   
 
@@ -81,9 +83,9 @@ const renderList = () => {
         details.classList.add('toDoItemElementWrapper');
         actions.classList.add('toDoItemElementWrapper');
 
-        editIcon.src = './8666681_edit_icon.png';
-        deleteIcon.src = './8664938_trash_can_delete_remove_icon.png';
-        saveIcon.src = './8666778_download_down_save_icon.png';
+        editIcon.src = '/icons/edit_icon.png';
+        deleteIcon.src = './icons/delete_icon.png';
+        saveIcon.src = '/icons/save_icon.png';
 
         editIcon.classList.add('icon');
         deleteIcon.classList.add('icon'); 
@@ -172,3 +174,30 @@ function saveListToTextFile(item) {
 }
 
 editBtn.addEventListener('click', editToDo);
+
+let doneToDoListSortDirection = 'ASC';
+let incompleteToDoListSortDirection = 'ASC';
+
+function sortCompleteToDo(){
+    doneToDoListSortDirection = doneToDoListSortDirection === 'ASC' ? 'DSC' : 'ASC';
+    if(doneToDoListSortDirection === 'ASC'){
+        sortDoneTodo.classList.add('sortToggle');
+        list.sort((a, b) => (a.done && !b.done) ? -1 : ((b.done && !a.done) ? 1 : a.title.localeCompare(b.title)));
+    } else {
+        sortDoneTodo.classList.remove('sortToggle');
+        list.sort((a, b) => (a.done && !b.done) ? -1 : ((b.done && !a.done) ? 1 : b.title.localeCompare(a.title)));
+    }
+    renderList();
+}
+
+function sortIncompleteToDo(){
+    incompleteToDoListSortDirection = incompleteToDoListSortDirection === 'ASC' ? 'DSC' : 'ASC';
+    if(incompleteToDoListSortDirection === 'ASC'){
+        sortTodo.classList.add('sortToggle');
+        list.sort((a, b) => a.title.localeCompare(b.title));
+    } else {
+        sortTodo.classList.remove('sortToggle');
+        list.sort((a, b) => b.title.localeCompare(a.title));
+    }
+    renderList();
+}

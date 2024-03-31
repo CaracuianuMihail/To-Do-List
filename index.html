@@ -15,20 +15,26 @@
     </div>
 
     <div class="listContainer">
-        <div class="toDoListWrapper">
-            <h2 class="listTitle">To Do List:</h2>
+        <div class="toDoListWrapper"> 
+            <div class="toDoItemElementWrapper" onclick="sortIncompleteToDo()">
+                <h2 class="listTitle">To Do List:</h2>
+                <img id="sortToDoIcon" class="icon sortIcon" src="./icons/sort_asc_icon.png" alt="sort ascending">
+            </div>
             <ul class="toDoList" id="toDoList"></ul>
         </div>
     
-        <div class="toDoListWrapper">
-            <h2 class="listTitle">Completed To Do:</h2>
+        <div class="toDoListWrapper" onclick="sortCompleteToDo()">
+            <div class="toDoItemElementWrapper">
+                <h2 class="listTitle">Completed To Do:</h2>
+                <img id="sortDoneToDoIcon" class="icon sortIcon" src="./icons/sort_asc_icon.png" alt="sort ascending">
+            </div>
             <ul class="toDoList" id="completeToDo"></ul>
         </div>
     </div>
 
     <div class="editToDoWrapper">
         <div class="editModal">
-            <p class="close-button">X</p>
+            <p class="close-button"><img src="./icons/close_icon.png" alt="close button"></p>
             <h2 class="listTitle">Edit To Do:</h2>
             <input id="editToDoTitle" placeholder="change to do title" class="toDoTitleInput">
             <button class="editToDoBtn" id="editToDoBtn">Save changes</button>
